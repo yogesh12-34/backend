@@ -165,6 +165,7 @@ passport.use(`jwt`,new JwtStrategy(opts, async function(jwt_payload, done) {
       amount: totalAmount*100,
       currency: "inr",
       // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      description: 'Software development services',
       automatic_payment_methods: {
         enabled: true,
       },
