@@ -155,19 +155,14 @@ passport.use(`jwt`,new JwtStrategy(opts, async function(jwt_payload, done) {
   server.use(express.static("public"));
   server.use(express.json());
   
-  const calculateOrderAmount = (items) => {
-    // Replace this constant with a calculation of the order's amount
-    // Calculate the order total on the server to prevent
-    // people from directly manipulating the amount on the client
-    return 1400;
-  };
+  
   
   server.post("/create-payment-intent", async (req, res) => {
-    const { calculateOrderAmount,orderId} = req.body;
+    const { totalAmount,orderId} = req.body;
   
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount,
+      amount: totalAmount*100,
       currency: "inr",
       // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
       automatic_payment_methods: {
